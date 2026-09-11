@@ -1,20 +1,26 @@
-name: My First Workflow
+name: Docker CI Pipeline
 
-on: 
+on:
   push:
     branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  hello-devops:
+  build-docker:
     runs-on: ubuntu-latest
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Show system info
-        run: |
-          echo "Hello DevOps Engineer!"
-          echo "Current time: $(date)"
-          echo "Running on: $(uname -a)"
+      - name: Show files
+        run: ls -la
+      
+      - name: Build Docker image
+        run: docker build -t my-first-app .
+      
+      - name: List Docker images
+        run: docker images
+      
+      - name: Run the container
+        run: docker run my-first-app
